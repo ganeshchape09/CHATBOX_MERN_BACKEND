@@ -6,6 +6,13 @@ const router = require("./routes/index");
 const cookiesParser = require("cookie-parser");
 const { app, server } = require("./socket/index");
 
+const PORT = process.env.PORT || 8080;
+
+const corsOptions = {
+  origin: "https://subtle-manatee-0ca198.netlify.app",
+  credentials: true,
+};
+
 // const app = express();
 // app.use(
 //   cors({
@@ -14,19 +21,18 @@ const { app, server } = require("./socket/index");
 //   })
 // );
 
-app.use((req, res, next) => {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://subtle-manatee-0ca198.netlify.app"
-  );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader(
+//     "Access-Control-Allow-Origin",
+//     "https://subtle-manatee-0ca198.netlify.app"
+//   );
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   next();
+// });
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookiesParser());
-
-const PORT = process.env.PORT || 8080;
 
 app.get("/", (request, response) => {
   response.json({
